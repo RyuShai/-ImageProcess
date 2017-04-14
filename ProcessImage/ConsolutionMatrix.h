@@ -13,14 +13,20 @@
 
 #ifndef CONSOLUTIONMATRIX_H
 #define CONSOLUTIONMATRIX_H
-
+#include <stdio.h>
+#include <iostream>
+#include <cv.h>
+using namespace cv;
 class ConsolutionMatrix {
 public:
     ConsolutionMatrix();
     ConsolutionMatrix(const ConsolutionMatrix& orig);
     virtual ~ConsolutionMatrix();
+    void setSourceMatrixSize(int col, int row);
+    void setKernelMatrixSize(int col, int row);
 private:
-
+    Mat sourceMatrix;
+    Mat kernelMatrix;
 };
 
 #endif /* CONSOLUTIONMATRIX_H */
