@@ -31,16 +31,18 @@ Mat FacialDetect::detectLeftEye(Mat inputImage)
     }
     
     //find left eye in matrix
-    cLeftEye.detectMultiScale(inputImage,listData,1.1,3,0, Size(16,16));
+    cLeftEye.detectMultiScale(inputImage,listData,1.1,3,0, Size(8,8));
     cout<<"number eyes detect: "<<listData.size()<<endl;
+    if(listData.size()<1)
+        return returnMatrix;
     for(int i=0; i<listData.size();i++)
     {
         rOutRectData = listData[i];
     }
-    cout<<"ryu 1"<<endl;
+
     returnMatrix = inputImage(rOutRectData);
-    resize(returnMatrix,returnMatrix,Size(72,72));
-    cout<<"ryu2"<<endl;
+    resize(returnMatrix,returnMatrix,Size(50,50));
+
     return returnMatrix;
 }
 
