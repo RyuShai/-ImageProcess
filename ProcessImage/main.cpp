@@ -71,10 +71,19 @@ void thresh_callback(int, void*) {
 }
 
 int main(int argc, char** argv) {
-    Mat src, dst, hsv;
 
-    FacialDetect detect;
+     Mat src, dst,dre,dtm,dno,dte,hsv;
+     FacialDetect detect;
+    
+     /* left eye */
     detect.SetUriLeftEyes("/usr/local/share/OpenCV/haarcascades/haarcascade_lefteye_2splits.xml");
+     /* right eye */
+    detect.SetUriRightEyes("/usr/local/share/OpenCV/haarcascades/haarcascade_righteye_2splits.xml");
+     /* mouth */
+    detect.SetUriMouth("/usr/local/share/OpenCV/haarcascades/mouth_2.xml");
+      /* nose */
+    detect.SetUriNose("/usr/local/share/OpenCV/haarcascades/Nariz_nuevo_20stages.xml");
+    
     //     src = imread("/home/ryu/Documents/testData/cropVTT1/image98.png");
     int iNum = 0;
     string inputPath = "/home/ryu/Documents/testData/inputpath/image";
@@ -90,6 +99,10 @@ int main(int argc, char** argv) {
         if (fFile != NULL) {
             fclose(fFile);
             src = imread(inputUri.str());
+            dst=detect.detectLeftEye(src);
+            dre=detect.detectRightEye(src);
+            dtm=detect.detectMouth(src);
+            dno = detect.detectNose(src);
 //            cvtColor(src,src,CV_RGB2GRAY);
             dst = detect.detectLeftEye(src);
             cout << "dst size: " << dst.cols<<" "<<dst.rows << endl;
