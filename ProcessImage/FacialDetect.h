@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
+#include <sstream>
 
 using namespace cv;
 using namespace std;
@@ -70,6 +71,11 @@ private:
     vector<Rect> listData;
     Rect rOutRectData;
     Mat returnMatrix;
+    int fileNumberLeftEye;
+    int fileNumberRightEye;
+    int fileNumberMouth;
+    int fileNumberNose;
+    string fileName;
 };
 
 #endif /* FACIALDETECT_H */

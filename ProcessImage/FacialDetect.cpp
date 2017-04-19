@@ -4,6 +4,12 @@
  * and open the template in the editor.
  */
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 /* 
  * File:   FacialDetect.cpp
  * Author: ryu
@@ -14,6 +20,11 @@
 #include "FacialDetect.h"
 
 FacialDetect::FacialDetect() {
+    fileName = "";
+    fileNumberLeftEye = 0;
+    fileNumberRightEye = 0;
+    fileNumberMouth = 0;
+    fileNumberNose = 0;
 }
 
 FacialDetect::FacialDetect(const FacialDetect& orig) {
@@ -38,39 +49,59 @@ Mat FacialDetect::detectLeftEye(Mat inputImage)
     
     
     
-//    cv::Rect roiE;
-//    
-//    size_t ic =0; // ic is indext of current element
-//    int ac = 0; // ac is area of current element
-//    
-//    size_t ib = 0; // ib is index of biggest element
-//    int ab = 0; // ab is area of biggest element
-//
-//    
-//    for(ic =0; ic <listData.size();ic++)
-//    {      
-//        roiE.x = listData[ic].x*0.8;
-//        roiE.y = listData[ic].y*1.7;
-//        roiE.width = listData[ic].width;
-//        roiE.height = listData[ic].height*0.6;  
-//        //get face detected area - current element
-//        ac = roiE.width*roiE.height;     
-//        rOutRectData= roiE;
-//    }
+    cv::Rect roiE;
+    float imgh, imgw;
+    size_t ic =0; // ic is indext of current element
+    int ac = 0; // ac is area of current element
+
     for(int i=0; i<listData.size();i++)
     {
         rOutRectData = listData[i];
     }
-    cout<<"ryu 1"<<endl;
-    if(listData.size() > 0 )
-    {
-    returnMatrix = inputImage(rOutRectData);
-//    resize(returnMatrix-listData.size()/2,returnMatrix,Size(25,20),INTER_LINEAR);
-    resize(returnMatrix,returnMatrix,Size(25,25));
-    cout<<"ryu 2"<<endl;
-    return returnMatrix;
+    for(ic =0; ic <listData.size();ic++)
+    {      
+        roiE.x = listData[ic].x;
+        roiE.y = listData[ic].y*1.5;
+        roiE.width = listData[ic].width;
+        roiE.height = listData[ic].height/2;  
+        //get face detected area - current element
+        ac = roiE.width*roiE.height;
+        if(roiE.width == roiE.height)
+        {
+            imgh = 16;
+            imgw = 16;
+            
+        cout<<"th1"<<endl;
+        }else if (roiE.width < roiE.height)
+        {
+            imgh =  16;
+            imgw = 16/(roiE.height/roiE.width);
+            
+        }else if (roiE.width > roiE.height)
+        {
+            imgh = 16/(roiE.width/roiE.height);                  
+            imgw = 16;
+        }
+        rOutRectData= roiE;
     }
+    
+    stringstream eyesleft;
+    
+    eyesleft.str("");
+    
+    eyesleft<<"/home/lordofknight93/Desktop/outPut/leftEye/lefteye"<<fileNumberLeftEye<<".png";
+    
+    if(listData.size() > 0 and listData.size() < 2)
+    {
+    returnMatrix = inputImage(rOutRectData); 
+    resize(returnMatrix,returnMatrix,Size(imgw,imgh));
+    fileNumberLeftEye++;
+    imwrite(eyesleft.str(),returnMatrix);
+    }
+    else
+    {
     return returnMatrix;    
+    }
 }
 
 //Righteye
@@ -87,70 +118,105 @@ Mat FacialDetect::detectRightEye(Mat inputImage)
     cRightEye.detectMultiScale(inputImage,listData,1.1,3,0, Size(16,16));
 
     cout<<"number eyes detect: "<<listData.size()<<endl;
-    
-    for(int i=0; i<listData.size();i++)
+    cv::Rect roiE;
+    float imgh, imgw;
+    size_t ic =0; // ic is indext of current element
+    int ac = 0; // ac is area of current element
+
+    for(ic =0; ic <listData.size();ic++)
     {
-        rOutRectData = listData[i];
-    }
+        roiE.x = listData[ic].x;
+        roiE.y = listData[ic].y*1.5;
+        roiE.width = listData[ic].width;
+        roiE.height = listData[ic].height/2;   
+       // get face detected area - current element
+        ac = roiE.width*roiE.height;
+        if(roiE.width == roiE.height)
+        {
+            imgh = 16;
+            imgw = 16;
+            
+        cout<<"th1"<<endl;
+        }else if (roiE.width < roiE.height)
+        {
+            imgh =  16;
+            imgw = 16/(roiE.height/roiE.width);
+            
+        }else if (roiE.width > roiE.height)
+        {
+            imgh = 16/(roiE.width/roiE.height);                  
+            imgw = 16;
+        }
+        rOutRectData= roiE;
+        
+    }       
+    stringstream eyesright;
+    eyesright.str("");
+    eyesright<<"/home/lordofknight93/Desktop/outPut/rightEye/righteye"<<fileNumberRightEye<<".png";
     
-    
-//    cv::Rect roiE;
-//    
-//    size_t ic =0; // ic is indext of current element
-//    int ac = 0; // ac is area of current element
-//    
-//    size_t ib = 0; // ib is index of biggest element
-//    int ab = 0; // ab is area of biggest element
-//
-//    
-//    for(int i =0; i <listData.size();i++)
-//    {
-//        roiE.x = listData[ic].x*2.7;
-//        roiE.y = listData[ic].y*1.5;
-//        roiE.width = listData[ic].width;
-//        roiE.height = listData[ic].height*0.8;   
-//       // get face detected area - current element
-//        ac = roiE.width*roiE.height; 
-//        rOutRectData= roiE;
-//        
-//    }
-    cout<<"ryu 3"<<endl;
-    if(listData.size() > 0 )
+    if(listData.size() > 0 and listData.size()< 2)
+   
     {
     returnMatrix = inputImage(rOutRectData);
     resize(returnMatrix,returnMatrix,Size(25,25));
-    cout<<"ryu 4"<<endl;
-    return returnMatrix;
+    fileNumberRightEye++;
+    imwrite(eyesright.str(),returnMatrix);
     }  
+    else{
     return returnMatrix;
+    }
 }
 
 Mat FacialDetect::detectMouth(Mat inputImage)
 {
     if(!cMouth.load(uriMouth))
     {
-        cout<<"cant load mouth classifier"<<endl;
+        cout<<"cant load right mouth classifier"<<endl;
         return returnMatrix;
     }
     
-    //find left eye in matrix
     cMouth.detectMultiScale(inputImage,listData,1.1,3,0, Size(16,16));
 
-
     cout<<"number mouth detect: "<<listData.size()<<endl;
+    cv::Rect roiE;
+    float imgh, imgw;
     for(int i=0; i<listData.size();i++)
     {
         rOutRectData = listData[i];
+        if(roiE.width == roiE.height)
+        {
+            imgh = 16;
+            imgw = 16;
+            
+        cout<<"th1"<<endl;
+        }else if (roiE.width < roiE.height)
+        {
+            imgh =  16;
+            imgw = 16/(roiE.height/roiE.width);
+            
+        }else if (roiE.width > roiE.height)
+        {
+            imgh = 16/(roiE.width/roiE.height);                  
+            imgw = 16;
+        }
     }
-    cout<<"ryu 5"<<endl;
-    if(listData.size() > 0 )
+
+    stringstream mouth;
+    
+    mouth.str("");
+    mouth<<"/home/lordofknight93/Desktop/outPut/Mouth/mouth"<<fileNumberMouth<<".png";
+    
+    if(listData.size() > 0 and listData.size()< 2)
+   
     {
     returnMatrix = inputImage(rOutRectData);
-    resize(returnMatrix,returnMatrix,Size(72,72));
-    cout<<"ryu 6"<<endl;
+    resize(returnMatrix,returnMatrix,Size(imgw,imgh));
+    fileNumberMouth++;
+    imwrite(mouth.str(),returnMatrix);
+    }  
+    else{
     return returnMatrix;
     }
-    return returnMatrix;
 }
 
 Mat FacialDetect::detectNose(Mat inputImage)
@@ -160,29 +226,47 @@ Mat FacialDetect::detectNose(Mat inputImage)
         cout<<"cant load nose classifier"<<endl;
         return returnMatrix;
     }
-    
-    //find left eye in matrix
-    cNose.detectMultiScale(inputImage,listData,1.1,3,0, Size(15,15));
-
-
-    cout<<"number mouth detect: "<<listData.size()<<endl;
+    cNose.detectMultiScale(inputImage,listData,1.1,3,0, Size(16,16));
+    cout<<"number nose detect: "<<listData.size()<<endl;
+    cv::Rect roiE;
+    float imgh, imgw;
     for(int i=0; i<listData.size();i++)
     {
         rOutRectData = listData[i];
+        if(roiE.width == roiE.height)
+        {
+            imgh = 16;
+            imgw = 16;
+            
+        cout<<"th1"<<endl;
+        }else if (roiE.width < roiE.height)
+        {
+            imgh =  16;
+            imgw = 16/(roiE.height/roiE.width);
+            
+        }else if (roiE.width > roiE.height)
+        {
+            imgh = 16/(roiE.width/roiE.height);                  
+            imgw = 16;
+        }
     }
-    cout<<"ryu 7"<<endl;
-    if(listData.size() > 0 )
+    
+    stringstream nose;
+    
+    nose.str("");
+    nose<<"/home/lordofknight93/Desktop/outPut/Nose/nose"<<fileNumberNose<<".png";
+    if(listData.size() > 0 and listData.size()< 2)
     {
     returnMatrix = inputImage(rOutRectData);
-    resize(returnMatrix,returnMatrix,Size(72,72));
-    cout<<"ryu 8"<<endl;
-    return returnMatrix;
+    resize(returnMatrix,returnMatrix,Size(imgw,imgh));
+    fileNumberNose++;
+    imwrite(nose.str(),returnMatrix);
     }
-    return returnMatrix;
+    else
+    {
+    return returnMatrix;    
+    }
 }
-
-
-
 
 
 
