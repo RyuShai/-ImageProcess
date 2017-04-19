@@ -67,17 +67,17 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/processimage: ${OBJECTFILES}
 ${OBJECTDIR}/ConsolutionMatrix.o: ConsolutionMatrix.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g `pkg-config --cflags opencv`   -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ConsolutionMatrix.o ConsolutionMatrix.cpp
+	$(COMPILE.cc) -g -I/usr/local/include/opencv2 -include /usr/local/include/opencv2/objdetect.hpp `pkg-config --cflags opencv`   -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ConsolutionMatrix.o ConsolutionMatrix.cpp
 
 ${OBJECTDIR}/FacialDetect.o: FacialDetect.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g `pkg-config --cflags opencv`   -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/FacialDetect.o FacialDetect.cpp
+	$(COMPILE.cc) -g -I/usr/local/include/opencv2 -include /usr/local/include/opencv2/objdetect.hpp `pkg-config --cflags opencv`   -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/FacialDetect.o FacialDetect.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g `pkg-config --cflags opencv`   -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -I/usr/local/include/opencv2 -include /usr/local/include/opencv2/objdetect.hpp `pkg-config --cflags opencv`   -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:

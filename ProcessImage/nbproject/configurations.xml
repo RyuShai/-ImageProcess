@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>CONFIG.h</itemPath>
       <itemPath>ConsolutionMatrix.h</itemPath>
       <itemPath>FacialDetect.h</itemPath>
     </logicalFolder>
@@ -39,6 +40,14 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <ccTool>
+          <incDir>
+            <pElem>/usr/local/include/opencv2</pElem>
+          </incDir>
+          <incFile>
+            <pElem>/usr/local/include/opencv2/objdetect.hpp</pElem>
+          </incFile>
+        </ccTool>
         <linkerTool>
           <linkerAddLib>
             <pElem>/usr/local/include/opencv2</pElem>
@@ -51,6 +60,8 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="CONFIG.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ConsolutionMatrix.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ConsolutionMatrix.h" ex="false" tool="3" flavor2="0">
@@ -82,6 +93,8 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="CONFIG.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ConsolutionMatrix.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ConsolutionMatrix.h" ex="false" tool="3" flavor2="0">
