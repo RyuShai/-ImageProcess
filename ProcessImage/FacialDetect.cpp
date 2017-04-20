@@ -203,11 +203,7 @@ void FacialDetect::thresh_callback(Mat inputSource)
 }
 
 //start get roi from input image
-void FacialDetect::getROIObject(string inputpath, string imageName, int counterNumber, string imagetype){
-//    this->inputPath = inputpath;
-//    this->inputImageName = imageName;
-//    this->inputCounter = counterNumber;
-//    this->inputImageType = imagetype;
+void FacialDetect::getROIObject(){
     int iMaxRange=1000;//some file missing so we try to find in max range before quit
     int iCheckFile=0;// reset to 0 when found file
     do{
@@ -229,17 +225,8 @@ void FacialDetect::getROIObject(string inputpath, string imageName, int counterN
             sourceImage = imread(inputStream.str());
 //            cout<<sourceImage.channels()<<endl;
             //test 
-//            vector<Mat> channels;
-//            split(sourceImage,channels);
-//            Mat chan1,chan2,chan3;
-//            chan1 = channels.at(0);
-//            chan2 = channels.at(1);
-//            chan3 = channels.at(2);
             thresh_callback(sourceImage);
-//            thresh_callback(chan1);
-//            thresh_callback(chan2);
-//            thresh_callback(chan3);
-            //
+
         }     
         inputCounter++;
         inputStream.str("");

@@ -21,10 +21,10 @@
 #include <string.h>
 #include <iostream>
 #include <sstream>
+#include "CONFIG.h"
 
 using namespace cv;
 using namespace std;
-using namespace CONFIG;
 
 class FacialDetect {
 public:
@@ -43,7 +43,7 @@ public:
     //draw contour as image
     //input = Mat object detected
     void thresh_callback(Mat input);
-    void getROIObject(string inputpath, string imageName, int counterNumber, string imagetype);
+    void getROIObject();
     //------------------------------
     
     
