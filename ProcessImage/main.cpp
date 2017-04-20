@@ -44,14 +44,21 @@ int main(int argc, char** argv) {
     //input - output path 
     detect.setInputPath("/home/ryu/Documents/testData/input/LeftEye/");
     detect.setOutputPath("/home/ryu/Documents/testData/output/LeftEye/");
+    
+    
     detect.setInputImageName("lefteye");
     detect.setOutputImageName("lefteye");
+    
+    
     detect.setInputImageType(".png");
     detect.setOutputImageType(".png");
     detect.setInputCounter(0);
     detect.setOutputCounter(0);
     
     detect.getROIObject("/home/ryu/Documents/testData/input/LeftEye/","lefteye",0,".png");
+    detect.getROIObject("/home/ryu/Documents/testData/input/RightEye/","righteye",0,".png");
+    detect.getROIObject("/home/ryu/Documents/testData/input/Mouth/","mouth",0,".png");
+    detect.getROIObject("/home/ryu/Documents/testData/input/Nose/","nose",0,".png");
     
 //    Mat src( 50,  70, CV_8UC1 , Scalar(1)); // 5x7
 //    Mat dst(100, 100, CV_8UC1, Scalar(255)); // 10x10
