@@ -61,7 +61,6 @@ vector< vector<Point> > Utilities::listArrayColor(Mat& inputMat, Vec3b color) {
     for (int i = 0; i < inputMat.rows; i++) {
         for (int j = 0; j < inputMat.cols; j++) {
             if (inputMat.at<Vec3b>(i, j) == color) {
-                cout<<"RYU SHAI "<<i<<"-"<<j<<endl;
                 vector<Point> add;
                 add = popPixel(inputMat, i, j);
                 listArray.push_back(add);
@@ -107,7 +106,6 @@ vector<Point> Utilities::popPixel(Mat &inputMat, int row, int col) {
         col = locate.y; 
         returnList.push_back(addList.back());
         addList.pop_back();
-        cout<<"Row: "<<row<<" col "<<col<<endl;
         //x-1:y
         if (col - 1 >= 0 &&
                 currentColor == inputMat.at<Vec3b>(row, col - 1)) {
