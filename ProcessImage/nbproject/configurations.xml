@@ -7,6 +7,7 @@
       <itemPath>CONFIG.h</itemPath>
       <itemPath>ConsolutionMatrix.h</itemPath>
       <itemPath>FacialDetect.h</itemPath>
+      <itemPath>Utilities.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -17,6 +18,7 @@
                    projectFiles="true">
       <itemPath>ConsolutionMatrix.cpp</itemPath>
       <itemPath>FacialDetect.cpp</itemPath>
+      <itemPath>Utilities.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -70,6 +72,10 @@
       </item>
       <item path="FacialDetect.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Utilities.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Utilities.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -102,6 +108,10 @@
       <item path="FacialDetect.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="FacialDetect.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Utilities.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Utilities.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

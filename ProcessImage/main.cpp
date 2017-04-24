@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
 #include "FacialDetect.h"
+#include "Utilities.h"
 #include <sstream>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
@@ -71,103 +72,22 @@ int main(int argc, char** argv) {
     }
     else
     {
-        namedWindow("hihi",128);
-         imshow("hihi",sourceInput);
+         namedWindow("origin",128);
+         imshow("origin",sourceInput);
          cout<<"row"<<sourceInput.rows<<"-"<<sourceInput.cols<<endl;
-        Vec3b fillBlack = Vec3b::all(0);
-        Vec3b fillwhite = Vec3b::all(255);
-//        for (int i=0;i<sourceInput.rows;i++)
-//        {
-//            for(int j=0;j<sourceInput.cols;j++)
-//            {
-//                Vec3b current = sourceInput.at<Vec3b>(Point(j,i));
-//                if((int)current[0]<10)
-//                    cout<<"0"<<(int)current[1]<<" ";
-//                else cout<<(int)current[0]<<" ";
-//                
-////                if((int)current[1]>110)
-////                    sourceInput.at<Vec3b>(j,i)=fillBlack;
-////                else if((int)current[1]<50)
-////                    sourceInput.at<Vec3b>(j,i)=fillwhite;
-////                else
-////                    sourceInput.at<Vec3b>(j,i)=Vec3b(0,255,255);
-//                
-//            }
-//            cout<<"\n";
-//        }
-        cout<<"\n";
-        for (int i=0;i<sourceInput.rows;i++)
-        {
-            for(int j=0;j<sourceInput.cols;j++)
-            {
-                Vec3b current = sourceInput.at<Vec3b>(Point(j,i));
-                if((int)current[1]<68)
-                    cout<<"0"<<" ";
-//                else if (69<(int)current[1] and (int)current[1]<126)
-//                    cout<<"2"<<" ";
-//                else if(126<(int)current[1] and 200>(int)current[1])
-//                    cout<<"8"<<(int)current[1]<<" ";
-                else
-                    cout<<"1"<<" ";
-//                if((int)current[1]>110)
-//                    sourceInput.at<Vec3b>(j,i)=fillBlack;
-//                else if((int)current[1]<50)
-//                    sourceInput.at<Vec3b>(j,i)=fillwhite;
-//                else
-//                    sourceInput.at<Vec3b>(j,i)=Vec3b(0,255,255);
-                
-            }
-            cout<<"\n";
-        }
-        vector<TOADO> toaDo;
-        TOADO remind;
-        int iCurrent=0;
-        bool matchOne=false;
-        for (int i=5;i<sourceInput.rows;i++)
-        {
-            iCurrent=i;
-            for(int j=0;j<sourceInput.cols;j++)
-            { 
-                Vec3b current = sourceInput.at<Vec3b>(Point(j,i));
-                if((int)current[1]<68)
-                {
-                    if(!matchOne)
-                    {
-                        //add first point in line
-                        remind.x=i;
-                        remind.y=j;
-                        cout<<"add: "<<i<<"-"<<j<<endl;
-                        toaDo.push_back(TOADO(remind));
-                        matchOne=true;
-                    }
-                    else{
-                        remind.x=i;
-                        remind.y=j;                        
-                    }
-                }
-            }
-            if(remind.x !=0 && remind.y!=0)
-                toaDo.push_back(TOADO(remind));
-            matchOne=false;
-        }
-        cout<<"\n"<<endl;
-        for(int i=0;i< toaDo.size();i+=2)
-        {
-            line( image, Point( toaDo.at(i).x, toaDo.at(i).y ), Point( 7, 13), Scalar( 110, 220, 0 ),1, CV_AA );
-            cout<<toaDo.at(i).x<<":"<<toaDo.at(i).y<<"-"<<toaDo.at(i+1).x<<":"<<toaDo.at(i+1).y<<endl;
-        }
-//        imwrite("/home/ryu/Documents/testData/Men6/Eyes/yey.jpg",sourceInput);
-//        imshow("hehe",sourceInput);
+         Vec3b smallColor = Vec3b::all(0);
+         Vec3b bigColor = Vec3b::all(255);
+         vector< vector<Point> > list;
+         Utilities util;
+         sourceInput = util.simpleColor(sourceInput,2,smallColor,bigColor);
+         namedWindow("simple color",128);
+         imshow("simple color",sourceInput);
+         cout<<"chet nhu tu hai"<<endl;
+         util.listArrayColor(sourceInput, smallColor);
+         cout<<"list size: "<<list.size()<<endl; 
+         waitKey();
     }
-    
-//    Mat src( 50,  70, CV_8UC1 , Scalar(1)); // 5x7
-//    Mat dst(100, 100, CV_8UC1, Scalar(255)); // 10x10
-//
-//src.copyTo(dst.rowRange(0,50),dst.colRange(0,src.cols));
-//namedWindow("1",100);
-//imshow("1",dst);
-    
-//    waitKey();
+
     return 0;
 }
 
