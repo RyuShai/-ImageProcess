@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
     detect.SetUriNose("/usr/local/share/OpenCV/haarcascades/Nariz_nuevo_20stages.xml");
     //
     //input - output path 
-    detect.setInputPath("/home/ryu/Documents/testData/Men4/");
+    detect.setInputPath("/home/ryu/Documents/testData/Men8/");
     detect.setOutputPath("/home/ryu/Documents/testData/Men4/Eyes/");
     
     
@@ -79,15 +79,26 @@ int main(int argc, char** argv) {
          Vec3b bigColor = Vec3b::all(255);
          vector< vector<Point> > list;
          Utilities util;
+         
          sourceInput = util.simpleColor(sourceInput,2,smallColor,bigColor);
+         
          namedWindow("simple color",128);
          imshow("simple color",sourceInput);
          cout<<"chet nhu tu hai"<<endl;
-         util.listArrayColor(sourceInput, smallColor);
+         list =util.listArrayColor(sourceInput, smallColor);
          cout<<"list size: "<<list.size()<<endl; 
+         for(int i=0; i<list.size();i++)
+         {
+             Mat apart(sourceInput.rows,sourceInput.cols,sourceInput.type());
+             apart = Scalar(255,255,255);
+             util.drawMatImage(apart,list.at(i),Vec3b::all(0));
+             string title = "apart "+ i;
+             namedWindow(title,128);
+             imshow(title, apart);
+            
+         }         
          waitKey();
-    }
-
+    }   
     return 0;
 }
 

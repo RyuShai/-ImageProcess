@@ -22,101 +22,141 @@ Utilities::Utilities(const Utilities& orig) {
 Utilities::~Utilities() {
 }
 
-Mat Utilities::simpleColor(Mat& inputMat, int meanTimes, Vec3b smallColor, Vec3b bigColor)
-{
+Mat Utilities::simpleColor(Mat& inputMat, int meanTimes, Vec3b smallColor, Vec3b bigColor) {
     int imean = 0;
     int threshold = 0;
-    int totalPixel=0;
-    int meanValue=255;
+    int totalPixel = 0;
+    int meanValue = 255;
     //get limitColor 
-    while(imean<meanTimes)
-    {
-        totalPixel=0;
-        threshold=0;
-        for(int i=0;i<inputMat.rows;i++)
-        {
-            for(int j=0; j<inputMat.cols;j++)
-            {
-                if((int)inputMat.at<Vec3b>(i,j)[0]<meanValue)
-                {
+    while (imean < meanTimes) {
+        totalPixel = 0;
+        threshold = 0;
+        for (int i = 0; i < inputMat.rows; i++) {
+            for (int j = 0; j < inputMat.cols; j++) {
+                if ((int) inputMat.at<Vec3b>(i, j)[0] < meanValue) {
                     threshold += (int) inputMat.at<Vec3b>(i, j)[0];
                     totalPixel++;
                 }
-                
+
             }
         }
         imean++;
-        meanValue = threshold/totalPixel;
+        meanValue = threshold / totalPixel;
     }
-    cout<<"Mean value: "<<meanValue<<endl;    
-    for(int i=0;i<inputMat.rows;i++)
-    {
-        for(int j=0; j<inputMat.cols;j++)
-        {
-            if((int)inputMat.at<Vec3b>(i,j)[0]<=meanValue)
-                inputMat.at<Vec3b>(i,j) = smallColor;
+    cout << "Mean value: " << meanValue << endl;
+    for (int i = 0; i < inputMat.rows; i++) {
+        for (int j = 0; j < inputMat.cols; j++) {
+            if ((int) inputMat.at<Vec3b>(i, j)[0] <= meanValue)
+                inputMat.at<Vec3b>(i, j) = smallColor;
             else
-                inputMat.at<Vec3b>(i,j) = bigColor;
+                inputMat.at<Vec3b>(i, j) = bigColor;
         }
     }
     return inputMat;
 }
 
-vector< vector<Point> > Utilities::listArrayColor(Mat& inputMat, Vec3b color)
-{
-    vector<Point> add;
+vector< vector<Point> > Utilities::listArrayColor(Mat& inputMat, Vec3b color) {
     vector< vector<Point> > listArray;
     Point coordinate;
-    for(int i=0;i< inputMat.rows;i++)
-    {
-        for(int j=0;j<inputMat.cols;j++)
-        {
-            if(inputMat.at<Vec3b>(i,j) == color)
-            {
-                popPixel(inputMat,i,j,add);
+    for (int i = 0; i < inputMat.rows; i++) {
+        for (int j = 0; j < inputMat.cols; j++) {
+            if (inputMat.at<Vec3b>(i, j) == color) {
+                cout<<"RYU SHAI "<<i<<"-"<<j<<endl;
+                vector<Point> add;
+                add = popPixel(inputMat, i, j);
                 listArray.push_back(add);
             }
         }
     }
+    vector<Point> topList, bottomList;
+    for(int i=0; i<listArray.size();i++)
+    {
+        if(listArray.at(i).size()>topList.size() || listArray.at(i).size()>bottomList.size())
+        {
+            if(topList.size()>=bottomList.size())
+            {
+                bottomList = listArray.at(i);
+            }
+            else
+            {
+                topList = listArray.at(i);
+            }
+        }
+    }
+    listArray.clear();
+    if(topList.size()>0)
+        listArray.push_back(topList);
+    if(bottomList.size()>0)
+        listArray.push_back(bottomList);
+    return listArray;
 }
 
-void Utilities::popPixel(Mat &inputMat,int x, int y, vector<Point> &add)
-{
-    Vec3b currentColor = inputMat.at<Vec3b>(x,y);
-    if(y-1>=0 &&
-            currentColor==inputMat.at<Vec3b>(x,y-1))
-    {
-//        add.push_back(Point(x,y));
-        if(inputMat.at<Vec3b>(x,y)!=Vec3b::all(255));
-            inputMat.at<Vec3b>(x,y)=Vec3b::all(255);
-        popPixel(inputMat,x,y-1,add);
+vector<Point> Utilities::popPixel(Mat &inputMat, int row, int col) {
+    vector<Point> addList;
+    vector<Point> returnList;
+    Vec3b currentColor = inputMat.at<Vec3b>(row, col);
+    bool added = false;
+    bool changedColor = false;
+    Point addPoint;
+    addPoint.x = row;
+    addPoint.y =col;
+    addList.push_back(addPoint);
+    while (addList.size() > 0) { 
+        Point locate = addList.back();
+        row = locate.x;
+        col = locate.y; 
+        returnList.push_back(addList.back());
+        addList.pop_back();
+        cout<<"Row: "<<row<<" col "<<col<<endl;
+        //x-1:y
+        if (col - 1 >= 0 &&
+                currentColor == inputMat.at<Vec3b>(row, col - 1)) {
+            addList.push_back(Point(row, col - 1));
+        }
+        //x+1:y
+        if (col + 1 < inputMat.cols &&
+                currentColor == inputMat.at<Vec3b>(row, col + 1)) {
+            addList.push_back(Point(row, col + 1));
+        }
+//        //x:y-1
+        if (row - 1 >= 0 &&
+                currentColor == inputMat.at<Vec3b>(row - 1, col)) {
+            addList.push_back(Point(row - 1, col));
+        }
+        //x:y-1
+        if (row + 1 < inputMat.rows &&
+                currentColor == inputMat.at<Vec3b>(row + 1, col)) {
+            addList.push_back(Point(row + 1, col));
+        }
+//        x-1:y-1
+        if (row -1 >= 0 && col-1 >=0 &&
+                currentColor == inputMat.at<Vec3b>(row-1, col-1)) {
+            addList.push_back(Point(row-1, col-1));
+        }
+        //x+1, y-1
+        if (row - 1 >= 0 && col+1<=inputMat.cols &&
+                currentColor == inputMat.at<Vec3b>(row - 1, col+1)) {
+            addList.push_back(Point(row- 1, col+1));
+        }
+        //x-1:y+1
+        if (row + 1 <= inputMat.rows && col-1>=0 &&
+                currentColor == inputMat.at<Vec3b>(row + 1, col-1)) {
+            addList.push_back(Point(row + 1, col-1));
+        }
+        if (row + 1 <= inputMat.rows && col+1 <=inputMat.cols &&
+                currentColor == inputMat.at<Vec3b>(row + 1, col+1)) {
+            addList.push_back(Point(row + 1, col+1));
+        }
+        inputMat.at<Vec3b>(row, col) = Vec3b::all(255);
     }
-    
-//    if(y+1>=inputMat.rows &&
-//            currentColor==inputMat.at<Vec3b>(x,y+1))
-//    {
-//        add.push_back(Point(x,y));
-//        if(inputMat.at<Vec3b>(x,y)!=Vec3b::all(255));
-//            inputMat.at<Vec3b>(x,y)=Vec3b::all(255);
-//        popPixel(inputMat,x,y+1);
-//    }
-//    
-//    if(x-1>=0 &&
-//            currentColor==inputMat.at<Vec3b>(x-1,y))
-//    {
-//        add.push_back(Point(x,y));
-//        if(inputMat.at<Vec3b>(x,y)!=Vec3b::all(255));
-//            inputMat.at<Vec3b>(x,y)=Vec3b::all(255);
-//        popPixel(inputMat,x-1,y);
-//    }
-//    
-//    if(y+1 >=inputMat.cols &&
-//            currentColor==inputMat.at<Vec3b>(x+1,y))
-//    {
-//        add.push_back(Point(x,y));
-//        if(inputMat.at<Vec3b>(x,y)!=Vec3b::all(255));
-//            inputMat.at<Vec3b>(x,y)=Vec3b::all(255);
-//        popPixel(inputMat,x+1,y);
-//    }
-//    cout<<"add size "<< add.size()<<endl;
+    return returnList;
+}
+
+void Utilities::drawMatImage(Mat& inputMat, vector<Point> listPixel, Vec3b color)
+{
+    while(listPixel.size()>0)
+    {
+        inputMat.at<Vec3b>(listPixel.front().x, listPixel.front().y) = color;
+        listPixel.erase(listPixel.begin());
+    }
 }

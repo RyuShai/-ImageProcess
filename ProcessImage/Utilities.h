@@ -30,15 +30,25 @@ public:
     //bigColor: the color set to pixel has value > meant value
     Mat simpleColor(Mat &inputMat , int meanTimes, Vec3b smallColor, Vec3b bigColor);
     
-    //get all array int mat image
+    //return colections of pixels which is nexto each other
     //inputMat: mat image after simple color
-    //
+    //color : color  will be find in matrix
     vector< vector<Point> > listArrayColor(Mat &inputMat, Vec3b color);
-    void popPixel(Mat &inputMat , int x, int y, vector<Point> &add);
+    
+    //drawMatImage
+    //draw list point to matrix
+    //inputMat: matrix will be draw
+    //listPixel : list coordinate
+    //color : color of pixel will be draw
+    void drawMatImage(Mat &inputMat,vector<Point> listPixel, Vec3b color);
    
     
 private:
-
+    //popPixel
+    //sub-function of listArrayColor, add all pixel apandable to collection
+    //inpuMat : source matrix
+    //row, col :start coordinate in matrix use to expandable
+    vector<Point> popPixel(Mat &inputMat,int row, int col);
 };
 
 #endif /* UTILITIES_H */
