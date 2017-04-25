@@ -163,26 +163,25 @@ struct TOADO
     int x = 0 ; 
     int y = 0 ;
 };
-Mat Utilities::drawLine(Mat& inputMat, int x,int y) {
+Mat Utilities::drawLine(Mat& inputMat, int x , int y ) {
         
-     vector<TOADO> toaDo;
+        vector<TOADO> toaDo;
         TOADO remind;
         
         bool matchOne=false;
         Vec3b smallColor = Vec3b::all(0);
         for (int i=0 ;i<inputMat.rows;)
         {  
-
             for(int j=0;j<inputMat.cols;j++)
             { 
                 Vec3b current = inputMat.at<Vec3b>(Point(j,i));
-                if((int)current[1]<68)
+                if(current == smallColor)
                 {
-                    if(current == smallColor)
-                    {
+                    if(!matchOne)
+                    {                        
                         //add first point in line
                         remind.x=i;
-                      remind.y=j;
+                        remind.y=j;
                         cout<<"add: "<<i<<"-"<<j<<endl;
                         toaDo.push_back(TOADO(remind));
                         matchOne=true;
@@ -204,31 +203,26 @@ Mat Utilities::drawLine(Mat& inputMat, int x,int y) {
             i++;
         }
         cout<<"\n"<<endl;
-          Mat image = Mat::zeros( 25, 25, CV_8UC3 );
+        Mat image = Mat::zeros( Size(32, 32), CV_8UC3 );
         for(int i=0;i< toaDo.size();i+=1)
         {   
             if(i ==0)
             {
-                    cout<<toaDo.at(i).x<<":"<<toaDo.at(i).y<<"-"<<toaDo.at(i+1).x<<":"<<toaDo.at(i+1).y<<endl;
-                   cout<<toaDo.at(i).x<<":"<<toaDo.at(i).y<<"-"<<toaDo.at(i+2).x<<":"<<toaDo.at(i+2).y<<endl;
                     line( image, Point( toaDo.at(i).y, toaDo.at(i).x ), Point( toaDo.at(i+1).y,toaDo.at(i+1).x), Scalar( 110, 220, 0 ),1, CV_AA );
                     line( image, Point( toaDo.at(i).y, toaDo.at(i).x ), Point( toaDo.at(i+2).y,toaDo.at(i+2).x), Scalar( 110, 220, 0 ),1, CV_AA );
             }else if(i >= toaDo.size()-2)
             {
-                cout<<toaDo.at(toaDo.size()-1).x<<":"<<toaDo.at(toaDo.size()-1).y<<"-"<<toaDo.at(toaDo.size()-2).x<<":"<<toaDo.at(toaDo.size()-2).y<<endl;
                 line( image, Point( toaDo.at(toaDo.size()-1).y, toaDo.at(toaDo.size()-1).x ), Point( toaDo.at(toaDo.size()-2).y,toaDo.at(toaDo.size()-2).x), Scalar( 110, 220, 0 ),1, CV_AA );
             }
             else
             if(i%2 == 0 && i < toaDo.size()-2)
             {
                 line( image, Point( toaDo.at(i).y, toaDo.at(i).x ), Point( toaDo.at(i+2).y,toaDo.at(i+2).x), Scalar( 110, 220, 0 ),1, CV_AA );
-                cout<<toaDo.at(i).x<<":"<<toaDo.at(i).y<<"-"<<toaDo.at(i+2).x<<":"<<toaDo.at(i+2).y<<endl;
             } else if (i%2 != 0 && i < toaDo.size() - 2)
             {
                 line( image, Point( toaDo.at(i).y, toaDo.at(i).x ), Point( toaDo.at(i+2).y,toaDo.at(i+2).x), Scalar( 110, 220, 0 ),1, CV_AA );
-                cout<<toaDo.at(i).x<<":"<<toaDo.at(i).y<<"-"<<toaDo.at(i+2).x<<":"<<toaDo.at(i+2).y<<endl;
             }
             
         }
-        
+      return image;
 }

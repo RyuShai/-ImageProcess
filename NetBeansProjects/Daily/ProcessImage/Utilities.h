@@ -29,7 +29,7 @@ public:
     //smallColor: the color set to pixel has value <= meant value
     //bigColor: the color set to pixel has value > meant value
     Mat simpleColor(Mat &inputMat , int meanTimes, Vec3b smallColor, Vec3b bigColor);
-    Mat drawLine(Mat& inputMat, int x,int y);
+    Mat drawLine(Mat& inputMat,int x , int y);
     //return colections of pixels which is nexto each other
     //inputMat: mat image after simple color
     //color : color  will be find in matrix

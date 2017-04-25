@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
     detect.SetUriNose("/usr/local/share/OpenCV/haarcascades/Nariz_nuevo_20stages.xml");
     //
     //input - output path 
-    detect.setInputPath("/home/ryu/Documents/testData/Men8/");
+    detect.setInputPath("/home/lordofknight93/Documents/Image_Origin/Image/cropVTT1/Man/Men6/");
     detect.setOutputPath("/home/ryu/Documents/testData/Men4/Eyes/");
     
     
@@ -84,6 +84,8 @@ int main(int argc, char** argv) {
          
          namedWindow("simple color",128);
          imshow("simple color",sourceInput);
+         
+         
          cout<<"chet nhu tu hai"<<endl;
          list =util.listArrayColor(sourceInput, smallColor);
          cout<<"list size: "<<list.size()<<endl; 
@@ -91,10 +93,17 @@ int main(int argc, char** argv) {
          {
              Mat apart(sourceInput.rows,sourceInput.cols,sourceInput.type());
              apart = Scalar(255,255,255);
-             util.drawMatImage(apart,list.at(i),Vec3b::all(0));
-             string title = "apart "+ i;
+            util.drawMatImage(apart,list.at(i),Vec3b::all(0));
+             string title = "apart"+i;
              namedWindow(title,128);
              imshow(title, apart);
+             cout<<"list "<<list.size()<<endl;
+             Mat drawLine = util.drawLine(apart,0,0);
+             string drawline = "draw" + i;
+             namedWindow(drawline,128);
+             imshow(drawline,drawLine);
+             
+             
             
          }         
          waitKey();
